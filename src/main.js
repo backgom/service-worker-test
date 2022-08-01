@@ -1,23 +1,28 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { worker } from './mocks/browser';
-import { useServiceWorker } from './composables/serviceWorker';
+import { registerSW } from 'virtual:pwa-register';
 
 import App from './App.vue';
 import router from './router';
 
 import './assets/main.css';
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
   worker.start();
 } else {
-  useServiceWorker();
+  const intervalMS = 10 * 1000; // 10 sec.
 
-  // setInterval(() => {
-  //   console.log('fetch');
-  //   const baseURL = '/';
-  //   fetch(baseURL);
-  // }, 5000);
+  const updateSW = registerSW({
+    onNeedRefresh() {},
+    // onOfflineReady() {},
+    onRegistered(r) {
+      r &&
+        setInterval(() => {
+          r.update();
+        }, intervalMS);
+    },
+  });
 }
 
 const app = createApp(App);

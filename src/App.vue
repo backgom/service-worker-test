@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
-import NotificationDialog from './components/NotificationDialog.vue';
 import { version } from '../package.json';
+import ReloadPrompt from './components/ReloadPrompt.vue';
 </script>
 
 <template>
@@ -25,7 +25,7 @@ import { version } from '../package.json';
     </div>
   </header>
 
-  <NotificationDialog />
+  <ReloadPrompt />
 
   <RouterView />
 </template>
